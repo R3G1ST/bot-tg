@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  bot:
+    build: .
+    restart: always
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: vpn
+      POSTGRES_USER: vpn
+      POSTGRES_PASSWORD: vpnpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+  redis:
+    image: redis:7
+    restart: always
+volumes:
+  pgdata:
